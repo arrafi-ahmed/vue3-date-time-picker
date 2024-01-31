@@ -10,7 +10,6 @@ const handleEmitDate = (dates) => {
 
 <template>
   <main>
-    {{ data }}
     <div class="wrapper">
       <date-time-picker :step="5" color="#d93c60" timeFormat="24" type="datetime" @emit-dates="handleEmitDate"/>
     </div>
