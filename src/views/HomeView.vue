@@ -2,7 +2,7 @@
 import DateTimePicker from "@/components/DateTimePicker.vue";
 import {reactive} from "vue";
 
-const data = reactive({startDate: '2024-01-16', startTime: '22:40', endDate: '2024-01-27', endTime: '22:40'})
+const data = reactive({startDate: null, startTime: null, endDate: null, endTime: null})
 const handleEmitDate = (dates) => {
   Object.assign(data, {...dates})
 }
