@@ -1,5 +1,5 @@
 {
-  "name": "datetime-picker",
+  "name": "vue3-date-time-picker",
   "version": "0.0.0",
   "private": true,
   "type": "module",

@@ -1,4 +1,4 @@
-# DateAndTimePicker Component
+# Vue3 Date Time Picker
 
 ## Props
 

@@ -95,8 +95,9 @@ const validate = (value) => {
 const submitValue = (datetimeType) => {
   if (datetimeType === "start") {
     if (type === 'datetime') {
-      const splittedDate = inputValue.startDate.split('T')
-      if ((!splittedDate[0] || !splittedDate[1])) {
+
+      const splittedDate = inputValue.startDate?.split('T')
+      if ((!splittedDate || !splittedDate[0] || !splittedDate[1])) {
         error.value = 'Please select start date-time!'
         return;
       }
@@ -126,8 +127,8 @@ const submitValue = (datetimeType) => {
     showStartPicker.value = false;
   } else if (datetimeType === "end") {
     if (type === 'datetime') {
-      const splittedDate = inputValue.endDate.split('T')
-      if ((!splittedDate[0] || !splittedDate[1])) {
+      const splittedDate = inputValue.endDate?.split('T')
+      if (!splittedDate || !splittedDate[0] || !splittedDate[1]) {
         error.value = 'Please select end date-time!'
         return;
       }
@@ -270,8 +271,10 @@ onMounted(() => {
   <div class="date-time-container w-100">
     <div v-if="type === 'datetime' || type === 'time'" class="format">
       Time Format:
-      <label><input v-model="format" :style="{ accentColor: color }" type="radio" value="24"/>24-hour </label>
-      <label><input v-model="format" :style="{ accentColor: color }" type="radio" value="12"/>12-hour</label>
+      <label class="ml-2"><input v-model="format" :style="{ accentColor: color }" type="radio" value="24"/>24-hour
+      </label>
+      <label class="ml-2"><input v-model="format" :style="{ accentColor: color }" type="radio"
+                                 value="12"/>12-hour</label>
     </div>
     <!--  start date-time-->
     <div class="d-flex">
@@ -281,14 +284,16 @@ onMounted(() => {
           <input id="start"
                  v-model="formattedStartValue"
                  :placeholder="placeholder"
-                 :style="{ borderColor: color }"
+                 :style="{ border: `1px solid ${color}` }"
                  class="inputbox"
                  type="text"
+                 readonly
                  @click="showStartPicker = true"/>
           <div class="buttons">
-            <button v-if="formattedStartValue" :style="{ backgroundColor: color }" class="ml-4"
+            <button v-if="formattedStartValue" :style="{ border: `1px solid ${color}`, backgroundColor: 'white' }"
+                    class="ml-4"
                     @click="clearValue('start')
-            ">x
+            ">X
             </button>
           </div>
         </div>
@@ -298,7 +303,7 @@ onMounted(() => {
                 ref="startDateRef"
                 v-model="inputValue.startDate"
                 :step="step * 60 || 1"
-                :style="{ borderColor: color }"
+                :style="{ border: `1px solid ${color}` }"
                 class="inputbox"
                 type="datetime-local"
             />
@@ -307,6 +312,7 @@ onMounted(() => {
             <input
                 ref="startDateRef"
                 v-model="inputValue.startDate"
+                :style="{ border: `1px solid ${color}` }"
                 class="inputbox"
                 type="date"
             />
@@ -315,14 +321,17 @@ onMounted(() => {
             <input
                 ref="startTimeRef"
                 v-model="inputValue.startTime"
+                :style="{ border: `1px solid ${color}` }"
                 :step="step * 60 || 1"
                 class="inputbox"
                 type="time"
             />
           </div>
           <div class="buttons">
-            <button :style="{ backgroundColor: color }" @click.stop="showStartPicker = false">Cancel</button>
-            <button :style="{ backgroundColor: color }" class="submit-btn" @click.stop="submitValue('start')">OK
+            <button :style="{ backgroundColor: color }" @click.stop="showStartPicker = false">Cancel
+            </button>
+            <button :style="{ backgroundColor: color }" class="submit-btn"
+                    @click.stop="submitValue('start')">OK
             </button>
           </div>
         </div>
@@ -336,14 +345,16 @@ onMounted(() => {
               id="end"
               v-model="formattedEndValue"
               :placeholder="placeholder"
-              :style="{ borderColor: color }"
+              :style="{ border: `1px solid ${color}` }"
               class="inputbox"
               type="text"
+              readonly
               @click="showEndPicker = true"
           />
           <div class="buttons">
-            <button v-if="formattedEndValue" :style="{ backgroundColor: color }" class="ml-4"
-                    @click="clearValue('end')">x
+            <button v-if="formattedEndValue" :style="{ border: `1px solid ${color}`, backgroundColor: 'white' }"
+                    class="ml-4"
+                    @click="clearValue('end')">X
             </button>
           </div>
         </div>
@@ -352,7 +363,7 @@ onMounted(() => {
             <input
                 ref="endDateRef"
                 v-model="inputValue.endDate"
-                :style="{ borderColor: color }"
+                :style="{ border: `1px solid ${color}` }"
                 class="inputbox"
                 type="datetime-local"
             />
@@ -361,7 +372,7 @@ onMounted(() => {
             <input
                 ref="endDateRef"
                 v-model="inputValue.endDate"
-                :style="{ borderColor: color }"
+                :style="{ border: `1px solid ${color}` }"
                 class="inputbox"
                 type="date"
             />
@@ -370,6 +381,7 @@ onMounted(() => {
             <input
                 ref="endTimeRef"
                 v-model="inputValue.endTime"
+                :style="{ border: `1px solid ${color}` }"
                 :step="step * 60 || 1"
                 class="inputbox"
                 type="time"
@@ -377,7 +389,8 @@ onMounted(() => {
           </div>
           <div class="buttons">
             <button :style="{ backgroundColor: color }" @click="showEndPicker = false">Cancel</button>
-            <button :style="{ backgroundColor: color }" class="submit-btn" @click="submitValue('end')">OK</button>
+            <button :style="{ backgroundColor: color }" class="submit-btn" @click="submitValue('end')">OK
+            </button>
           </div>
         </div>
 
@@ -388,14 +401,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-input[readonly]::placeholder {
-  color: rgb(128, 128, 128);
-}
-
-input[type='radio'] {
-  accent-color: green;
-}
-
 .d-flex {
   display: flex;
 }
@@ -427,8 +432,8 @@ input[class=inputbox] {
   display: flex;
 }
 
-.ml-10 {
-  margin-left: 10px;
+.ml-2 {
+  margin-left: 2px;
 }
 
 .ml-4 {
@@ -437,6 +442,10 @@ input[class=inputbox] {
 
 .mb-8 {
   margin-bottom: 8px;
+}
+
+.ml-10 {
+  margin-left: 10px;
 }
 
 .picker {
@@ -473,9 +482,5 @@ input[class=inputbox] {
 .error {
   color: red;
   font-weight: bold;
-}
-
-.border-none {
-  border: none;
 }
 </style>
